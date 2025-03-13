@@ -1,11 +1,10 @@
 import { BlogSection } from "@/components/blog-section";
 import { RevealAnimation } from "@/components/ui/reveal-animation";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { createClient } from "../../../supabase/client-server";
+import { createClient } from "@/app/supabase/server";
 import Image from "next/image";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 60; // Revalidate mỗi 60 giây
 
 export default async function BlogPage() {
   const supabase = await createClient();
@@ -39,7 +38,7 @@ export default async function BlogPage() {
             />
           </RevealAnimation>
 
-          <BlogSection customPosts={posts} />
+          <BlogSection customPosts={posts ?? []} />
         </div>
       </section>
 
@@ -84,13 +83,11 @@ export default async function BlogPage() {
                 <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-5px]">
                   <div className="h-48 overflow-hidden">
                     <Image
-                      src={topic.image}
-                      alt={topic.title}
+                      src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&q=80"
+                      alt="Mô tả hình ảnh"
                       width={600}
                       height={400}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                      loading="lazy"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                      className="w-full h-auto"
                     />
                   </div>
                   <div className="p-6">

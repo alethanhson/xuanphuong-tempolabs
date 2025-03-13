@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { createClient } from "../../../supabase/client-browser";
+import { createClient } from "@/app/supabase/server";
 import { useRouter } from "next/navigation";
 import {
   LayoutDashboard,

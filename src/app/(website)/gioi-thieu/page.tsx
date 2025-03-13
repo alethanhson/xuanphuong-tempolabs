@@ -66,53 +66,6 @@ export default function AboutPage() {
 
       <FeaturesSection />
       <StatsSection />
-
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <RevealAnimation>
-            <h2 className="text-3xl font-bold mb-12 text-center">
-              Đội Ngũ Lãnh Đạo
-            </h2>
-          </RevealAnimation>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Nguyễn Văn A",
-                position: "Giám đốc điều hành",
-                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
-              },
-              {
-                name: "Trần Thị B",
-                position: "Giám đốc kỹ thuật",
-                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
-              },
-              {
-                name: "Lê Văn C",
-                position: "Giám đốc kinh doanh",
-                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
-              },
-            ].map((member, index) => (
-              <RevealAnimation key={index} delay={index * 100}>
-                <div className="bg-gray-50 rounded-xl p-6 text-center">
-                  <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-blue-100">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      width={128}
-                      height={128}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                  <p className="text-gray-600">{member.position}</p>
-                </div>
-              </RevealAnimation>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

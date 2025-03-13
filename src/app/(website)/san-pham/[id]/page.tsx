@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, Check, Phone } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { ProductStructuredData } from "@/components/structured-data";
-import { createClient } from "../../../../../supabase/client-server";
+import { createClient } from "@/app/supabase/server";
 import { ProductViewTracker } from "@/components/analytics/product-view-tracker";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { LazyImage } from "@/components/ui/lazy-image";

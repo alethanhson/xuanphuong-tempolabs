@@ -1,8 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { createClient } from "../../../../supabase/client-server";
-import { redirect } from "next/navigation";
-import { Plus, Pencil, Trash2, Eye } from "lucide-react";
-import Link from "next/link";
+'use client';
+
+import { Button } from '@/components/ui/button';
+import { createClient } from '@/app/supabase/server';
+import { redirect } from 'next/navigation';
+import { Plus, Pencil, Trash2, Eye } from 'lucide-react';
+import Link from 'next/link';
 
 export default async function BlogPage() {
   const supabase = await createClient();
@@ -12,48 +14,48 @@ export default async function BlogPage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return redirect("/sign-in");
+    return redirect('/sign-in');
   }
 
   // Fetch blog posts from Supabase
   const { data: posts, error } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .order("created_at", { ascending: false });
+    .from('blog_posts')
+    .select('*')
+    .order('created_at', { ascending: false });
 
   // Sample blog posts for demonstration
   const samplePosts = [
     {
-      id: "1",
-      title: "5 Lý Do Chuyển Đổi Sang CNC Gỗ Hiện Đại",
-      slug: "5-ly-do-chuyen-doi-sang-cnc-go-hien-dai",
+      id: '1',
+      title: '5 Lý Do Chuyển Đổi Sang CNC Gỗ Hiện Đại',
+      slug: '5-ly-do-chuyen-doi-sang-cnc-go-hien-dai',
       excerpt:
-        "Khám phá những lợi ích mà máy CNC gỗ hiện đại mang lại cho doanh nghiệp của bạn, từ tăng năng suất đến nâng cao chất lượng sản phẩm.",
+        'Khám phá những lợi ích mà máy CNC gỗ hiện đại mang lại cho doanh nghiệp của bạn, từ tăng năng suất đến nâng cao chất lượng sản phẩm.',
       image_url:
-        "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&q=80",
-      published_at: "2023-05-15T10:30:00Z",
+        'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&q=80',
+      published_at: '2023-05-15T10:30:00Z',
       read_time: 5,
     },
     {
-      id: "2",
-      title: "Hướng Dẫn Bảo Trì Máy CNC Kim Loại Đúng Cách",
-      slug: "huong-dan-bao-tri-may-cnc-kim-loai-dung-cach",
+      id: '2',
+      title: 'Hướng Dẫn Bảo Trì Máy CNC Kim Loại Đúng Cách',
+      slug: 'huong-dan-bao-tri-may-cnc-kim-loai-dung-cach',
       excerpt:
-        "Bài viết chia sẻ các bước bảo trì máy CNC kim loại đúng cách để kéo dài tuổi thọ và đảm bảo hiệu suất làm việc tối ưu.",
+        'Bài viết chia sẻ các bước bảo trì máy CNC kim loại đúng cách để kéo dài tuổi thọ và đảm bảo hiệu suất làm việc tối ưu.',
       image_url:
-        "https://images.unsplash.com/photo-1565034957450-e7f4e4d04193?w=600&q=80",
-      published_at: "2023-06-22T14:45:00Z",
+        'https://images.unsplash.com/photo-1565034957450-e7f4e4d04193?w=600&q=80',
+      published_at: '2023-06-22T14:45:00Z',
       read_time: 8,
     },
     {
-      id: "3",
-      title: "Xu Hướng Công Nghệ CNC 2025: Tự Động Hóa và AI",
-      slug: "xu-huong-cong-nghe-cnc-2025-tu-dong-hoa-va-ai",
+      id: '3',
+      title: 'Xu Hướng Công Nghệ CNC 2025: Tự Động Hóa và AI',
+      slug: 'xu-huong-cong-nghe-cnc-2025-tu-dong-hoa-va-ai',
       excerpt:
-        "Khám phá những xu hướng công nghệ CNC mới nhất sẽ định hình ngành công nghiệp trong năm 2025, với trọng tâm là tự động hóa và trí tuệ nhân tạo.",
+        'Khám phá những xu hướng công nghệ CNC mới nhất sẽ định hình ngành công nghiệp trong năm 2025, với trọng tâm là tự động hóa và trí tuệ nhân tạo.',
       image_url:
-        "https://images.unsplash.com/photo-1624365169198-38255ba54160?w=600&q=80",
-      published_at: "2023-07-10T09:15:00Z",
+        'https://images.unsplash.com/photo-1624365169198-38255ba54160?w=600&q=80',
+      published_at: '2023-07-10T09:15:00Z',
       read_time: 6,
     },
   ];
@@ -123,7 +125,7 @@ export default async function BlogPage() {
                       {post.title}
                     </td>
                     <td className="p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]">
-                      {new Date(post.published_at).toLocaleDateString("vi-VN")}
+                      {new Date(post.published_at).toLocaleDateString('vi-VN')}
                     </td>
                     <td className="p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]">
                       {post.read_time} phút

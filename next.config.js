@@ -2,7 +2,10 @@
 
 const nextConfig = {
   images: {
-    domains: ["images.unsplash.com"],
+    domains: [
+      "images.unsplash.com",
+      "api.dicebear.com"
+    ],
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 3600, // Cache images for 1 hour
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048], // Optimize for common device sizes

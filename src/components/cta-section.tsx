@@ -1,12 +1,16 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { RevealAnimation } from "@/components/ui/reveal-animation";
+'use client';
+
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { RevealAnimation } from '@/components/ui/reveal-animation';
 
 export function CtaSection() {
   return (
-    <section className="py-24 bg-blue-600 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
+    <section
+      className="py-16 md:py-24 bg-gradient-to-br from-blue-600 to-blue-700 relative overflow-hidden"
+      aria-label="Đăng ký tư vấn"
+    >
+      <div className="absolute inset-0 opacity-5">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern
@@ -28,13 +32,14 @@ export function CtaSection() {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-12">
           <RevealAnimation>
-            <div className="lg:w-1/2">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Sẵn sàng nâng cấp công nghệ sản xuất?
+            <div className="lg:w-1/2 max-w-xl">
+              <h2 className="text-3xl md:text-4xl xl:text-5xl font-bold text-white mb-6 leading-tight">
+                Sẵn sàng nâng cấp{' '}
+                <span className="text-blue-100">công nghệ sản xuất?</span>
               </h2>
-              <p className="text-blue-100 text-lg mb-8">
+              <p className="text-blue-50 text-base md:text-lg mb-8 leading-relaxed">
                 Hãy liên hệ ngay với chúng tôi để được tư vấn và nhận giải pháp
                 tốt nhất cho nhu cầu sản xuất của bạn. Đội ngũ chuyên gia của
                 chúng tôi sẽ hỗ trợ bạn từ khâu tư vấn đến triển khai.
@@ -42,7 +47,7 @@ export function CtaSection() {
               <div className="flex flex-wrap gap-4">
                 <Button
                   size="lg"
-                  className="bg-white text-blue-600 hover:bg-blue-50"
+                  className="bg-white text-blue-600 hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl"
                   asChild
                 >
                   <Link href="/lien-he">Liên hệ ngay</Link>
@@ -50,7 +55,7 @@ export function CtaSection() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="text-white border-white hover:bg-blue-700"
+                  className="text-white border-white hover:bg-blue-700/50 transition-all duration-300"
                   asChild
                 >
                   <Link href="/demo">Xem Demo</Link>
@@ -60,38 +65,54 @@ export function CtaSection() {
           </RevealAnimation>
 
           <RevealAnimation direction="left">
-            <div className="lg:w-1/2 bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg">
-              <h3 className="text-xl font-bold text-white mb-6 text-center">
+            <div className="lg:w-1/2 max-w-md w-full bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-2xl border border-white/20">
+              <h3 className="text-2xl font-bold text-white mb-6 text-center">
                 Đăng ký nhận tư vấn miễn phí
               </h3>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                 <div>
+                  <label htmlFor="fullname" className="sr-only">
+                    Họ và tên
+                  </label>
                   <input
+                    id="fullname"
                     type="text"
                     placeholder="Họ và tên"
-                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-blue-100 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-blue-100 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300"
                     required
                   />
                 </div>
                 <div>
+                  <label htmlFor="email" className="sr-only">
+                    Email
+                  </label>
                   <input
+                    id="email"
                     type="email"
                     placeholder="Email"
-                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-blue-100 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-blue-100 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300"
                     required
                   />
                 </div>
                 <div>
+                  <label htmlFor="phone" className="sr-only">
+                    Số điện thoại
+                  </label>
                   <input
+                    id="phone"
                     type="tel"
                     placeholder="Số điện thoại"
-                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-blue-100 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-blue-100 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300"
                     required
                   />
                 </div>
                 <div>
+                  <label htmlFor="product" className="sr-only">
+                    Sản phẩm quan tâm
+                  </label>
                   <select
-                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-blue-100 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    id="product"
+                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300"
                     required
                   >
                     <option value="" className="text-gray-800">
@@ -114,24 +135,26 @@ export function CtaSection() {
                 <div>
                   <Button
                     type="submit"
-                    className="w-full bg-white text-blue-600 hover:bg-blue-50"
+                    className="w-full bg-white text-blue-600 hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl font-semibold"
                   >
                     Gửi Yêu Cầu
                   </Button>
                 </div>
               </form>
-              <div className="mt-6 flex items-center justify-center gap-2">
-                <div className="flex -space-x-2">
+
+              <div className="mt-8 flex items-center justify-center gap-3 bg-white/5 p-4 rounded-xl">
+                <div className="flex -space-x-3">
                   {[1, 2, 3, 4].map((i) => (
                     <div
                       key={i}
-                      className="w-8 h-8 rounded-full bg-white/20 border-2 border-blue-600 flex items-center justify-center text-xs font-bold text-white"
+                      className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-200 to-blue-300 border-2 border-white flex items-center justify-center text-sm font-bold text-blue-600"
+                      aria-hidden="true"
                     >
-                      {i === 4 ? "+" : ""}
+                      {i === 4 ? '99+' : ''}
                     </div>
                   ))}
                 </div>
-                <span className="text-white text-sm">
+                <span className="text-white text-sm font-medium">
                   Hơn 500+ khách hàng đã tin tưởng chúng tôi
                 </span>
               </div>

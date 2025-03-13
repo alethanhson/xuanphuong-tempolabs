@@ -1,4 +1,4 @@
-import { createClient } from "../../../supabase/client-server";
+import { createClient } from "@/app/supabase/server";
 import { redirect } from "next/navigation";
 import {
   BarChart3,

@@ -1,5 +1,5 @@
 import { unstable_cache } from "next/cache";
-import { createClient } from "../../supabase/client-server";
+import { createClient } from "@/app/supabase/server";
 
 // Cache featured products for the homepage
 export const getFeaturedProducts = unstable_cache(

@@ -1,13 +1,13 @@
-"use client";
+'use client'
 
-import { useState, useEffect, memo } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { RevealAnimation } from "@/components/ui/reveal-animation";
-import { ArrowRight, Star, Check } from "lucide-react";
-import { createClient } from "../../supabase/client-browser";
-import { ProductCard } from "@/components/product-card";
+import { useState, useEffect, memo } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { SectionHeading } from '@/components/ui/section-heading';
+import { RevealAnimation } from '@/components/ui/reveal-animation';
+import { ArrowRight, Star, Check } from 'lucide-react';
+import Image from 'next/image';
+import { createClient } from '@supabase/supabase-js';
 
 type ProductFeature = string;
 
@@ -33,81 +33,81 @@ type Category = {
 // Default products if none are fetched from the database
 const defaultProducts: Product[] = [
   {
-    id: "1",
-    name: "Máy Gỗ CNC",
-    slug: "may-go-cnc",
+    id: '1',
+    name: 'Máy Gỗ CNC',
+    slug: 'may-go-cnc',
     description:
-      "Máy gỗ CNC hiện đại với độ chính xác cao, phù hợp cho các xưởng sản xuất nội thất vừa và nhỏ.",
+      'Máy gỗ CNC hiện đại với độ chính xác cao, phù hợp cho các xưởng sản xuất nội thất vừa và nhỏ.',
     features: [
-      "Độ chính xác cao",
-      "Diện tích làm việc lớn",
-      "Công suất mạnh mẽ",
-      "Dễ dàng vận hành",
+      'Độ chính xác cao',
+      'Diện tích làm việc lớn',
+      'Công suất mạnh mẽ',
+      'Dễ dàng vận hành',
     ],
     images: [
-      "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&q=80",
+      'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&q=80',
     ],
-    category: "may-go",
+    category: 'may-go',
   },
   {
-    id: "2",
-    name: "Máy Dán Cạnh",
-    slug: "may-dan-canh",
+    id: '2',
+    name: 'Máy Dán Cạnh',
+    slug: 'may-dan-canh',
     description:
-      "Máy dán cạnh tự động, giúp tăng năng suất và chất lượng trong sản xuất nội thất gỗ công nghiệp.",
+      'Máy dán cạnh tự động, giúp tăng năng suất và chất lượng trong sản xuất nội thất gỗ công nghiệp.',
     features: [
-      "Tốc độ dán nhanh",
-      "Dán cạnh chính xác",
-      "Dễ dàng điều chỉnh",
-      "Phù hợp nhiều loại vật liệu",
+      'Tốc độ dán nhanh',
+      'Dán cạnh chính xác',
+      'Dễ dàng điều chỉnh',
+      'Phù hợp nhiều loại vật liệu',
     ],
     images: [
-      "https://images.unsplash.com/photo-1565034957450-e7f4e4d04193?w=600&q=80",
+      'https://images.unsplash.com/photo-1565034957450-e7f4e4d04193?w=600&q=80',
     ],
-    category: "may-dan-canh",
+    category: 'may-dan-canh',
   },
   {
-    id: "3",
-    name: "Máy Khoan Ngang",
-    slug: "may-khoan-ngang",
+    id: '3',
+    name: 'Máy Khoan Ngang',
+    slug: 'may-khoan-ngang',
     description:
-      "Máy khoan ngang chuyên dụng cho ngành nội thất, giúp tạo các lỗ khoan chính xác và nhanh chóng.",
+      'Máy khoan ngang chuyên dụng cho ngành nội thất, giúp tạo các lỗ khoan chính xác và nhanh chóng.',
     features: [
-      "Nhiều đầu khoan",
-      "Khoan chính xác",
-      "Tốc độ cao",
-      "Dễ dàng điều chỉnh",
+      'Nhiều đầu khoan',
+      'Khoan chính xác',
+      'Tốc độ cao',
+      'Dễ dàng điều chỉnh',
     ],
     images: [
-      "https://images.unsplash.com/photo-1624365169198-38255ba54160?w=600&q=80",
+      'https://images.unsplash.com/photo-1624365169198-38255ba54160?w=600&q=80',
     ],
-    category: "may-khoan-ngang",
+    category: 'may-khoan-ngang',
   },
   {
-    id: "4",
-    name: "Máy Cưa Bàn Trượt",
-    slug: "may-cua-ban-truot",
+    id: '4',
+    name: 'Máy Cưa Bàn Trượt',
+    slug: 'may-cua-ban-truot',
     description:
-      "Máy cưa bàn trượt chất lượng cao, giúp cắt gỗ chính xác và an toàn cho sản xuất nội thất.",
+      'Máy cưa bàn trượt chất lượng cao, giúp cắt gỗ chính xác và an toàn cho sản xuất nội thất.',
     features: [
-      "Lưỡi cưa sắc bén",
-      "Bàn trượt êm ái",
-      "Cắt chính xác",
-      "Hệ thống an toàn",
+      'Lưỡi cưa sắc bén',
+      'Bàn trượt êm ái',
+      'Cắt chính xác',
+      'Hệ thống an toàn',
     ],
     images: [
-      "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=600&q=80",
+      'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=600&q=80',
     ],
-    category: "may-cua-ban-truot",
+    category: 'may-cua-ban-truot',
   },
 ];
 
 const categories: Category[] = [
-  { id: "all", name: "Tất cả" },
-  { id: "may-go", name: "Máy Gỗ" },
-  { id: "may-dan-canh", name: "Máy Dán Cạnh" },
-  { id: "may-khoan-ngang", name: "Máy Khoan Ngang" },
-  { id: "may-cua-ban-truot", name: "Máy Cưa Bàn Trượt" },
+  { id: 'all', name: 'Tất cả' },
+  { id: 'may-go', name: 'Máy Gỗ' },
+  { id: 'may-dan-canh', name: 'Máy Dán Cạnh' },
+  { id: 'may-khoan-ngang', name: 'Máy Khoan Ngang' },
+  { id: 'may-cua-ban-truot', name: 'Máy Cưa Bàn Trượt' },
 ];
 
 interface ProductsSectionProps {
@@ -117,27 +117,31 @@ interface ProductsSectionProps {
 export const ProductsSection = memo(function ProductsSection({
   initialFeaturedProducts = [],
 }: ProductsSectionProps) {
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeCategory, setActiveCategory] = useState('all');
   const [products, setProducts] = useState<Product[]>(
     initialFeaturedProducts.length > 0
       ? initialFeaturedProducts
-      : defaultProducts,
+      : defaultProducts
   );
   const [isLoading, setIsLoading] = useState(
-    initialFeaturedProducts.length === 0,
+    initialFeaturedProducts.length === 0
   );
-  const supabase = createClient();
 
   useEffect(() => {
     // Only fetch if we don't have initial products
     if (initialFeaturedProducts.length === 0) {
       const fetchProducts = async () => {
         try {
+          const supabase = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+          );
+          
           const { data, error } = await supabase
-            .from("products")
-            .select("*")
-            .eq("is_draft", false)
-            .order("created_at", { ascending: false })
+            .from('products')
+            .select('*')
+            .eq('is_draft', false)
+            .order('created_at', { ascending: false })
             .limit(4);
 
           if (error) throw error;
@@ -145,7 +149,7 @@ export const ProductsSection = memo(function ProductsSection({
             setProducts(data);
           }
         } catch (error) {
-          console.error("Error fetching products:", error);
+          console.error('Error fetching products:', error);
         } finally {
           setIsLoading(false);
         }
@@ -156,7 +160,7 @@ export const ProductsSection = memo(function ProductsSection({
   }, [initialFeaturedProducts]);
 
   const filteredProducts =
-    activeCategory === "all"
+    activeCategory === 'all'
       ? products
       : products.filter((product) => product.category === activeCategory);
 
@@ -184,7 +188,7 @@ export const ProductsSection = memo(function ProductsSection({
           {categories.map((category) => (
             <Button
               key={category.id}
-              variant={activeCategory === category.id ? "default" : "outline"}
+              variant={activeCategory === category.id ? 'default' : 'outline'}
               onClick={() => setActiveCategory(category.id)}
               className="mb-2"
             >
@@ -223,9 +227,10 @@ export const ProductsSection = memo(function ProductsSection({
               ))
           ) : filteredProducts.length > 0 ? (
             filteredProducts.map((product, index) => (
-id}
+              <RevealAnimation
+                key={product.id}
                 delay={index * 100}
-                direction={index % 2 === 0 ? "right" : "left"}
+                direction={index % 2 === 0 ? 'right' : 'left'}
               >
                 <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-5px]">
                   <div className="md:flex">
@@ -235,7 +240,7 @@ id}
                           src={
                             product.images && product.images.length > 0
                               ? product.images[0]
-                              : "https://via.placeholder.com/600x400?text=No+Image"
+                              : 'https://via.placeholder.com/600x400?text=No+Image'
                           }
                           alt={product.name}
                           width={600}
@@ -287,7 +292,7 @@ id}
                               : `/san-pham/${product.category}`
                           }
                         >
-                          {product.price === null ? "Liên hệ" : "Xem chi tiết"}{" "}
+                          {product.price === null ? 'Liên hệ' : 'Xem chi tiết'}{' '}
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>

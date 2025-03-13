@@ -4,7 +4,7 @@ import { RevealAnimation } from "@/components/ui/reveal-animation";
 import { Check, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { createClient } from "../../../../../supabase/client-server";
+import { createClient } from "@/app/supabase/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 3600; // Revalidate every hour

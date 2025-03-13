@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import { ModernHeroSection } from "@/components/modern-hero-section";
 import { FeaturesSection } from "@/components/features-section";
 import { ProductsSection } from "@/components/products-section";
@@ -6,35 +7,61 @@ import { StatsSection } from "@/components/stats-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { BlogSection } from "@/components/blog-section";
 import { CtaSection } from "@/components/cta-section";
-import { createClient } from "../../../supabase/client-server";
+import { createClient } from "@/app/supabase/server";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 60;
 
 export default async function Home() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
-  // Fetch featured products for the homepage
-  const { data: featuredProducts } = await supabase
-    .from("products")
-    .select("*")
-    .eq("featured", true)
-    .eq("is_draft", false)
-    .limit(4);
+  try {
+    // Fetch featured products for the homepage
+    const { data: featuredProducts } = await supabase
+      .from("products")
+      .select("*")
+      .eq("featured", true)
+      .eq("is_draft", false)
+      .limit(4);
 
-  return (
-    <>
-      <ModernHeroSection />
-      <FeaturesSection />
-      <ProductsSection initialFeaturedProducts={featuredProducts || []} />
-      <StatsSection />
-      <ServicesSection />
-      <TestimonialsSection />
-      <BlogSection />
-      <CtaSection />
-    </>
-  );
+    // Tạo object mới chỉ với dữ liệu cần thiết
+    const cleanProducts = featuredProducts ? featuredProducts.map(p => ({
+      id: p.id || '',
+      name: p.name || '',
+      slug: p.slug || '',
+      description: p.description || '',
+      images: Array.isArray(p.images) ? [...p.images] : [],
+      category: p.category || '',
+      featured: Boolean(p.featured),
+      price: p.price === null ? null : Number(p.price),
+      highlights: Array.isArray(p.highlights) ? [...p.highlights] : [],
+      features: Array.isArray(p.features) ? [...p.features] : []
+    })) : [];
+
+    return (
+      <>
+        <ModernHeroSection />
+        <FeaturesSection />
+        <ProductsSection initialFeaturedProducts={cleanProducts} />
+        <StatsSection />
+        <ServicesSection />
+        <TestimonialsSection />
+        <BlogSection />
+        <CtaSection />
+      </>
+    );
+  } catch (error) {
+    console.error("Error in Home page:", error);
+    return (
+      <>
+        <ModernHeroSection />
+        <FeaturesSection />
+        <ProductsSection initialFeaturedProducts={[]} />
+        <StatsSection />
+        <ServicesSection />
+        <TestimonialsSection />
+        <BlogSection />
+        <CtaSection />
+      </>
+    );
+  }
 }

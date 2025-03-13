@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-import { createClient } from "../../supabase/client-server";
+import { createClient } from "@/app/supabase/server";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Base URLs

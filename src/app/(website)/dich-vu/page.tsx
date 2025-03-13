@@ -2,11 +2,9 @@ import { ServicesSection } from "@/components/services-section";
 import { RevealAnimation } from "@/components/ui/reveal-animation";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Check } from "lucide-react";
-import { createClient } from "../../../supabase/client-server";
+import { createClient } from "@/app/supabase/server";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 3600; // Revalidate every hour
-
+export const revalidate = 60;
 export default async function ServicesPage() {
   const supabase = await createClient();
 
